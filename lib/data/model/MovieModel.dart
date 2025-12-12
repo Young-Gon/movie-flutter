@@ -1,52 +1,52 @@
 class MovieModel {
   final bool adult;
-  final String backdrop_path;
-  final List<int> genre_ids;
+  final String? backdropPath;
+  final List<int> genreIds;
   final int id;
-  final String original_language;
-  final String original_title;
+  final String originalLanguage;
+  final String originalTitle;
   final String overview;
   final double popularity;
-  final String poster_path;
-  final String release_date;
+  final String? posterPath;
+  final String releaseDate;
   final String title;
   final bool video;
-  final double vote_average;
-  final int vote_count;
+  final double voteAverage;
+  final int voteCount;
 
   MovieModel({
     required this.adult,
-    required this.backdrop_path,
-    required this.genre_ids,
+    this.backdropPath,
+    required this.genreIds,
     required this.id,
-    required this.original_language,
-    required this.original_title,
+    required this.originalLanguage,
+    required this.originalTitle,
     required this.overview,
     required this.popularity,
-    required this.poster_path,
-    required this.release_date,
+    this.posterPath,
+    required this.releaseDate,
     required this.title,
     required this.video,
-    required this.vote_average,
-    required this.vote_count,
+    required this.voteAverage,
+    required this.voteCount,
   });
 
   factory MovieModel.fromJson(Map<String, dynamic> json) {
     return MovieModel(
       adult: json['adult'],
-      backdrop_path: json['backdrop_path'],
-      genre_ids: List<int>.from(json['genre_ids']),
+      backdropPath: json['backdrop_path'],
+      genreIds: List<int>.from(json['genre_ids']),
       id: json['id'],
-      original_language: json['original_language'],
-      original_title: json['original_title'],
+      originalLanguage: json['original_language'],
+      originalTitle: json['original_title'],
       overview: json['overview'],
-      popularity: json['popularity'],
-      poster_path: json['poster_path'],
-      release_date: json['release_date'],
+      popularity: json['popularity'].toDouble(),
+      posterPath: json['poster_path'],
+      releaseDate: json['release_date'],
       title: json['title'],
       video: json['video'],
-      vote_average: json['vote_average'],
-      vote_count: json['vote_count'],
+      voteAverage: json['vote_average'].toDouble(),
+      voteCount: json['vote_count'],
     );
   }
 }
