@@ -62,7 +62,7 @@ class _HomeScreenState extends State<HomeScreen>
               ),
               text: 'TV',
             ),
-            Tab(icon: const Icon(Icons.search), text: 'Search'),
+            const Tab(icon: Icon(Icons.search), text: 'Search'),
           ],
         ),
       ),

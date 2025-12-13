@@ -2,10 +2,13 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:movie/component/SimpleMediaItem.dart';
+import 'package:movie/data/model/GeneralResult.dart';
+import 'package:movie/data/model/MovieModel.dart';
 
 import '../../../component/ErrorScreen.dart';
+import '../../../component/MediaItem.dart';
 import '../../../component/MoviePagerItem.dart';
+import '../../../component/SimpleMediaItem.dart';
 import '../../../data/provider/movie_provider.dart';
 
 class MoviePage extends ConsumerStatefulWidget {
@@ -63,56 +66,78 @@ class _MoviePageState extends ConsumerState<MoviePage> {
         final upcomingData = allMovies.$2;
         final trendingData = allMovies.$3;
 
-        // 화면 전체를 스크롤할 수 있도록 SingleChildScrollView로 감싸줍니다.
-        return SingleChildScrollView(
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Text(
-                "Now Playing Movies",
-                style: Theme.of(context).textTheme.titleLarge,
-              ),
-              SizedBox(
-                height: 250,
-                child: PageView.builder(
-                  controller: _pageController,
-                  itemCount: nowPlayingData.results.length,
-                  itemBuilder: (context, index) {
-                    return MoviePagerItem(movie: nowPlayingData.results[index]);
-                  },
-                ),
-              ),
-              Text(
-                "Upcomming Movies",
-                style: Theme.of(context).textTheme.titleLarge,
-              ),
-              SizedBox(
-                height: 270,
-                child: ListView.separated(
-                  padding: const EdgeInsets.all(20),
-                  scrollDirection: Axis.horizontal,
-                  separatorBuilder: (context, index) =>
-                      const SizedBox(width: 20),
-                  itemBuilder: (context, index) {
-                    return SimpleMediaItem(movie: upcomingData.results[index]);
-                  },
-                  itemCount: upcomingData.results.length,
-                ),
-              ),
-              Text(
-                "Trending Movies",
-                style: Theme.of(context).textTheme.titleLarge,
-              ),
-            ],
-          ),
+        return ListView.separated(
+          padding: const EdgeInsets.all(20),
+          separatorBuilder: (context, index) => const SizedBox(height: 20),
+          itemCount: trendingData.results.length + 1,
+          itemBuilder: (context, index) {
+            if (index == 0) {
+              return ListHeader(
+                pageController: _pageController,
+                nowPlayingData: nowPlayingData,
+                upcomingData: upcomingData,
+              );
+            }
+            return MediaItem(movie: trendingData.results[index - 1]);
+          },
         );
       },
       loading: () => const Center(child: CircularProgressIndicator()),
       error: (error, stackTrace) {
         print('에러 발생: $error');
         _timer?.cancel(); // 에러 발생 시 타이머를 중지합니다.
-        return ErrorScreen();
+        return const ErrorScreen();
       },
+    );
+  }
+}
+
+class ListHeader extends StatelessWidget {
+  const ListHeader({
+    super.key,
+    required PageController pageController,
+    required this.nowPlayingData,
+    required this.upcomingData,
+  }) : _pageController = pageController;
+
+  final PageController _pageController;
+  final GeneralResult<MovieModel> nowPlayingData;
+  final GeneralResult<MovieModel> upcomingData;
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Text(
+          "Now Playing Movies",
+          style: Theme.of(context).textTheme.titleLarge,
+        ),
+        SizedBox(
+          height: 250,
+          child: PageView.builder(
+            controller: _pageController,
+            itemCount: nowPlayingData.results.length,
+            itemBuilder: (context, index) {
+              return MoviePagerItem(movie: nowPlayingData.results[index]);
+            },
+          ),
+        ),
+        Text("Upcoming Movies", style: Theme.of(context).textTheme.titleLarge),
+        SizedBox(
+          height: 270,
+          child: ListView.separated(
+            padding: const EdgeInsets.all(20),
+            scrollDirection: Axis.horizontal,
+            separatorBuilder: (context, index) => const SizedBox(width: 20),
+            itemBuilder: (context, index) {
+              return SimpleMediaItem(movie: upcomingData.results[index]);
+            },
+            itemCount: upcomingData.results.length,
+          ),
+        ),
+        Text("Trending Movies", style: Theme.of(context).textTheme.titleLarge),
+      ],
     );
   }
 }

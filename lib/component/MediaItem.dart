@@ -3,9 +3,8 @@ import 'package:flutter/material.dart';
 import '../data/model/MovieModel.dart';
 import '../util.dart';
 
-class SimpleMediaItem extends StatelessWidget {
-  const SimpleMediaItem({super.key, required MovieModel movie})
-    : _movie = movie;
+class MediaItem extends StatelessWidget {
+  const MediaItem({super.key, required MovieModel movie}) : _movie = movie;
 
   final MovieModel _movie;
 
@@ -16,8 +15,8 @@ class SimpleMediaItem extends StatelessWidget {
         Navigator.of(context).pushNamed('/movie', arguments: _movie);
       },
       child: SizedBox(
-        width: 100,
-        child: Column(
+        height: 150,
+        child: Row(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             _movie.posterPath != null
@@ -28,17 +27,21 @@ class SimpleMediaItem extends StatelessWidget {
                     fit: BoxFit.cover,
                   )
                 : Container(width: 100, height: 160, color: Colors.grey),
-            Text(
-              _movie.title,
-              style: Theme.of(
-                context,
-              ).textTheme.bodyMedium?.copyWith(fontWeight: FontWeight.w600),
-              maxLines: 2,
-              overflow: TextOverflow.ellipsis,
-            ),
-            Text(
-              _movie.releaseDate,
-              style: Theme.of(context).textTheme.bodyMedium,
+            const SizedBox(width: 10),
+            Expanded(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    _movie.title,
+                    style: Theme.of(context).textTheme.bodyLarge,
+                  ),
+                  Text(
+                    _movie.releaseDate,
+                    style: Theme.of(context).textTheme.bodyMedium,
+                  ),
+                ],
+              ),
             ),
           ],
         ),
