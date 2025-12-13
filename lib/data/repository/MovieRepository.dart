@@ -7,7 +7,7 @@ class MovieRepository {
 
   MovieRepository(this._apiService);
 
-  Future<GeneralResult<MovieModel>> getNowPlayingMovies() {
-    return _apiService.getNowPlayingMovies();
+  Future<GeneralResult<MovieModel>> getNowPlayingMovies() async {
+    return await _apiService.getNowPlayingMovies();
   }
 }

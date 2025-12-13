@@ -17,9 +17,12 @@ final movieRepositoryProvider = Provider<MovieRepository>((ref) {
 });
 
 // getNowPlayingMovies API의 결과를 제공하는 FutureProvider
-final nowPlayingMoviesProvider = FutureProvider<GeneralResult<MovieModel>>((ref) {
+final nowPlayingMoviesProvider = FutureProvider<GeneralResult<MovieModel>>((
+  ref,
+) async {
   // movieRepositoryProvider를 watch하여 MovieRepository 인스턴스를 가져옵니다.
   final movieRepository = ref.watch(movieRepositoryProvider);
   // 영화 데이터를 가져오는 API를 호출합니다.
-  return movieRepository.getNowPlayingMovies();
+
+  return await movieRepository.getNowPlayingMovies();
 });

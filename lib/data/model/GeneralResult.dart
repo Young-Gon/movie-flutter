@@ -17,7 +17,7 @@ class GeneralResult<T> {
   ) {
     return GeneralResult(
       page: json['page'],
-      results: (json['results'] as List<Map<String, dynamic>>)
+      results: (json['results'] as List<dynamic>)
           .map((item) => fromJsonT(item))
           .toList(),
       totalPages: json['total_pages'],

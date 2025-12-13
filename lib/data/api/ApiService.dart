@@ -8,10 +8,12 @@ class ApiService {
   final Dio _dio = DioClient().dio; // DioClient를 통해 Dio 인스턴스 접근
 
   Future<GeneralResult<MovieModel>> getNowPlayingMovies() async {
-    return _get<GeneralResult<MovieModel>>(
+    return await _get<GeneralResult<MovieModel>>(
       path: '/movie/now_playing',
       queryParameters: {'language': 'ko-KR', 'page': "1", 'region': 'KR'},
-      fromJson: (json) => GeneralResult.fromJson(json, (data) => MovieModel.fromJson(data as Map<String, dynamic>)),
+      fromJson: (json) => GeneralResult.fromJson(json, (data) {
+        return MovieModel.fromJson(data);
+      }),
     );
   }
 

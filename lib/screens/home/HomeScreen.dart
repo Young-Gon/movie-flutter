@@ -14,6 +14,8 @@ class _HomeScreenState extends State<HomeScreen>
     with SingleTickerProviderStateMixin {
   late TabController _tabController;
 
+  final List<String> tabTitle = ["Movies", "TVs", "Search"];
+
   @override
   void initState() {
     super.initState();
@@ -32,6 +34,10 @@ class _HomeScreenState extends State<HomeScreen>
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(
+        title: Text(tabTitle[_tabController.index]),
+        centerTitle: true,
+      ),
       bottomNavigationBar: Material(
         color: Theme.of(context).colorScheme.primary,
         child: TabBar(
@@ -63,7 +69,7 @@ class _HomeScreenState extends State<HomeScreen>
       body: TabBarView(
         controller: _tabController,
         children: [
-          Center(child: MoviePage()),
+          const MoviePage(),
           const Center(child: SearchPage()),
           const Center(child: TvPage()),
         ],
