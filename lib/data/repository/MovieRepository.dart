@@ -10,4 +10,12 @@ class MovieRepository {
   Future<GeneralResult<MovieModel>> getNowPlayingMovies() async {
     return await _apiService.getNowPlayingMovies();
   }
+
+  Future<GeneralResult<MovieModel>> getUpcomingMovies() async {
+    return await _apiService.getUpcomingMovies();
+  }
+
+  Future<GeneralResult<MovieModel>> getTrendingMovie() async {
+    return await _apiService.getTrendingMovie();
+  }
 }

@@ -17,6 +17,25 @@ class ApiService {
     );
   }
 
+  Future<GeneralResult<MovieModel>> getUpcomingMovies() async {
+    return await _get<GeneralResult<MovieModel>>(
+      path: '/movie/upcoming',
+      queryParameters: {'language': 'ko-KR', 'page': "1", 'region': 'KR'},
+      fromJson: (json) => GeneralResult.fromJson(json, (data) {
+        return MovieModel.fromJson(data);
+      }),
+    );
+  }
+
+  Future<GeneralResult<MovieModel>> getTrendingMovie() async {
+    return await _get<GeneralResult<MovieModel>>(
+      path: '/trending/movie/week',
+      fromJson: (json) => GeneralResult.fromJson(json, (data) {
+        return MovieModel.fromJson(data);
+      }),
+    );
+  }
+
   Future<T> _get<T>({
     required String path,
     required T Function(dynamic) fromJson,

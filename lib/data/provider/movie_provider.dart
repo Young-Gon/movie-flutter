@@ -4,25 +4,57 @@ import 'package:movie/data/model/GeneralResult.dart';
 import 'package:movie/data/model/MovieModel.dart';
 import 'package:movie/data/repository/MovieRepository.dart';
 
-// ApiService를 제공하는 Provider
+// 1. ApiService Provider
 final apiServiceProvider = Provider<ApiService>((ref) {
   return ApiService();
 });
 
-// MovieRepository를 제공하는 Provider
+// 2. MovieRepository Provider
 final movieRepositoryProvider = Provider<MovieRepository>((ref) {
-  // apiServiceProvider를 watch하여 ApiService 인스턴스를 가져옵니다.
+  // apiServiceProvider를 사용하여 MovieRepository 인스턴스를 생성합니다.
   final apiService = ref.watch(apiServiceProvider);
   return MovieRepository(apiService);
 });
 
-// getNowPlayingMovies API의 결과를 제공하는 FutureProvider
-final nowPlayingMoviesProvider = FutureProvider<GeneralResult<MovieModel>>((
-  ref,
-) async {
-  // movieRepositoryProvider를 watch하여 MovieRepository 인스턴스를 가져옵니다.
+// 3. 기존 Provider들 (개별 사용 가능)
+final nowPlayingMoviesProvider = FutureProvider((ref) {
+  print("nowPlayingMoviesProvider");
   final movieRepository = ref.watch(movieRepositoryProvider);
-  // 영화 데이터를 가져오는 API를 호출합니다.
-
-  return await movieRepository.getNowPlayingMovies();
+  return movieRepository.getNowPlayingMovies();
 });
+
+final upcomingMoviesProvider = FutureProvider((ref) {
+  final movieRepository = ref.watch(movieRepositoryProvider);
+  return movieRepository.getUpcomingMovies();
+});
+
+final trendingMovieProvider = FutureProvider((ref) {
+  final movieRepository = ref.watch(movieRepositoryProvider);
+  return movieRepository.getTrendingMovie();
+});
+
+// 4. 세 개의 API 결과를 통합하는 새로운 Provider
+final moviePageDataProvider =
+    FutureProvider<
+      (
+        GeneralResult<MovieModel>,
+        GeneralResult<MovieModel>,
+        GeneralResult<MovieModel>,
+      )
+    >((ref) async {
+      final movieRepo = ref.watch(movieRepositoryProvider);
+
+      // Future.wait를 사용하여 세 개의 API를 동시에 호출합니다.
+      final results = await Future.wait([
+        movieRepo.getNowPlayingMovies(),
+        movieRepo.getUpcomingMovies(),
+        movieRepo.getTrendingMovie(),
+      ]);
+
+      // 결과를 Record로 반환합니다.
+      return (
+        results[0], // nowPlaying
+        results[1], // upcoming
+        results[2], // trending
+      );
+    });
