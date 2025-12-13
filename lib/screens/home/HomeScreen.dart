@@ -67,6 +67,7 @@ class _HomeScreenState extends State<HomeScreen>
         ),
       ),
       body: TabBarView(
+        physics: const NeverScrollableScrollPhysics(),
         controller: _tabController,
         children: [
           const MoviePage(),

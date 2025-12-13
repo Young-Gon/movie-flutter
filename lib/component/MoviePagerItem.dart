@@ -12,7 +12,6 @@ class MoviePagerItem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Stack(
-      fit: StackFit.expand,
       children: [
         _movie.backdropPath != null
             ? Image.network(
@@ -20,7 +19,7 @@ class MoviePagerItem extends StatelessWidget {
                 height: 250,
                 fit: BoxFit.fitWidth,
               )
-            : Container(color: Colors.grey),
+            : Container(color: Colors.grey, height: 250),
         ClipRect(
           child: BackdropFilter(
             filter: ImageFilter.blur(sigmaX: 5.0, sigmaY: 5.0),
