@@ -1,4 +1,5 @@
 import 'package:dio/dio.dart';
+import 'package:movie/data/model/TVModel.dart';
 
 import '../model/GeneralResult.dart';
 import '../model/MovieModel.dart';
@@ -18,7 +19,7 @@ class ApiService {
   }
 
   Future<GeneralResult<MovieModel>> getUpcomingMovies() async {
-    return await _get<GeneralResult<MovieModel>>(
+    return await _get(
       path: '/movie/upcoming',
       queryParameters: {'language': 'ko-KR', 'page': "1", 'region': 'KR'},
       fromJson: (json) => GeneralResult.fromJson(json, (data) {
@@ -28,10 +29,39 @@ class ApiService {
   }
 
   Future<GeneralResult<MovieModel>> getTrendingMovie() async {
-    return await _get<GeneralResult<MovieModel>>(
+    return await _get(
       path: '/trending/movie/week',
       fromJson: (json) => GeneralResult.fromJson(json, (data) {
         return MovieModel.fromJson(data);
+      }),
+    );
+  }
+
+  Future<GeneralResult<TVModel>> getTrendingTVs() async {
+    return await _get(
+      path: '/trending/tv/week',
+      fromJson: (json) => GeneralResult.fromJson(json, (data) {
+        return TVModel.fromJson(data);
+      }),
+    );
+  }
+
+  Future<GeneralResult<TVModel>> getAiringToday() async {
+    return await _get(
+      path: '/tv/airing_today',
+      queryParameters: {'language': 'ko-KR', 'page': "1", 'timezone': 'KR'},
+      fromJson: (json) => GeneralResult.fromJson(json, (data) {
+        return TVModel.fromJson(data);
+      }),
+    );
+  }
+
+  Future<GeneralResult<TVModel>> getTopRatedTVs() async {
+    return await _get(
+      path: '/tv/popular',
+      queryParameters: {'language': 'ko-KR', 'page': "1", 'region': 'KR'},
+      fromJson: (json) => GeneralResult.fromJson(json, (data) {
+        return TVModel.fromJson(data);
       }),
     );
   }

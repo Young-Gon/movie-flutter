@@ -71,8 +71,8 @@ class _HomeScreenState extends State<HomeScreen>
         controller: _tabController,
         children: [
           const MoviePage(),
+          const TvPage(),
           const Center(child: SearchPage()),
-          const Center(child: TvPage()),
         ],
       ),
     );

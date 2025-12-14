@@ -67,7 +67,6 @@ class _MoviePageState extends ConsumerState<MoviePage> {
         final trendingData = allMovies.$3;
 
         return ListView.separated(
-          padding: const EdgeInsets.all(20),
           separatorBuilder: (context, index) => const SizedBox(height: 20),
           itemCount: trendingData.results.length + 1,
           itemBuilder: (context, index) {
@@ -78,7 +77,10 @@ class _MoviePageState extends ConsumerState<MoviePage> {
                 upcomingData: upcomingData,
               );
             }
-            return MediaItem(movie: trendingData.results[index - 1]);
+            return Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 20),
+              child: MediaItem(movie: trendingData.results[index - 1]),
+            );
           },
         );
       },
@@ -109,10 +111,6 @@ class ListHeader extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text(
-          "Now Playing Movies",
-          style: Theme.of(context).textTheme.titleLarge,
-        ),
         SizedBox(
           height: 250,
           child: PageView.builder(
@@ -123,20 +121,32 @@ class ListHeader extends StatelessWidget {
             },
           ),
         ),
-        Text("Upcoming Movies", style: Theme.of(context).textTheme.titleLarge),
+        Padding(
+          padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 20),
+          child: Text(
+            "Upcoming Movies",
+            style: Theme.of(context).textTheme.titleLarge,
+          ),
+        ),
         SizedBox(
-          height: 270,
+          height: 230,
           child: ListView.separated(
-            padding: const EdgeInsets.all(20),
+            padding: const EdgeInsets.symmetric(horizontal: 20),
             scrollDirection: Axis.horizontal,
             separatorBuilder: (context, index) => const SizedBox(width: 20),
             itemBuilder: (context, index) {
-              return SimpleMediaItem(movie: upcomingData.results[index]);
+              return SimpleMediaItem(media: upcomingData.results[index]);
             },
             itemCount: upcomingData.results.length,
           ),
         ),
-        Text("Trending Movies", style: Theme.of(context).textTheme.titleLarge),
+        Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 20),
+          child: Text(
+            "Trending Movies",
+            style: Theme.of(context).textTheme.titleLarge,
+          ),
+        ),
       ],
     );
   }

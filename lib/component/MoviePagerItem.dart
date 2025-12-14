@@ -32,42 +32,45 @@ class MoviePagerItem extends StatelessWidget {
           onTap: () {
             Navigator.of(context).pushNamed('/movie', arguments: _movie);
           },
-          child: Row(
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              _movie.posterPath != null
-                  ? Image.network(
-                      Util.makeImgPath(_movie.posterPath!),
-                      width: 100,
-                      height: 150,
-                      fit: BoxFit.cover,
-                    )
-                  : Container(width: 100, height: 150, color: Colors.grey),
-              const SizedBox(width: 10),
-              Expanded(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Text(
-                      _movie.title,
-                      style: Theme.of(context).textTheme.titleLarge,
-                    ),
-                    const SizedBox(height: 10),
-                    Text(
-                      _movie.releaseDate,
-                      style: Theme.of(context).textTheme.bodyMedium,
-                    ),
-                    Text(
-                      _movie.overview,
-                      style: Theme.of(context).textTheme.bodySmall,
-                      maxLines: 3,
-                      overflow: TextOverflow.ellipsis,
-                    ),
-                  ],
+          child: Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 20),
+            child: Row(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                _movie.posterPath != null
+                    ? Image.network(
+                        Util.makeImgPath(_movie.posterPath!),
+                        width: 100,
+                        height: 150,
+                        fit: BoxFit.cover,
+                      )
+                    : Container(width: 100, height: 150, color: Colors.grey),
+                const SizedBox(width: 10),
+                Expanded(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Text(
+                        _movie.title,
+                        style: Theme.of(context).textTheme.titleLarge,
+                      ),
+                      const SizedBox(height: 10),
+                      Text(
+                        _movie.releaseDate,
+                        style: Theme.of(context).textTheme.bodyMedium,
+                      ),
+                      Text(
+                        _movie.overview,
+                        style: Theme.of(context).textTheme.bodySmall,
+                        maxLines: 3,
+                        overflow: TextOverflow.ellipsis,
+                      ),
+                    ],
+                  ),
                 ),
-              ),
-            ],
+              ],
+            ),
           ),
         ),
       ],

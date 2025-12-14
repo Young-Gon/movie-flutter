@@ -1,52 +1,20 @@
-class MovieModel {
+import 'package:movie/data/model/MediaModel.dart';
+
+// implements 대신 extends를 사용합니다.
+class MovieModel extends MediaModel {
   final bool adult;
-  final String? backdropPath;
-  final List<int> genreIds;
-  final int id;
-  final String originalLanguage;
   final String originalTitle;
-  final String overview;
-  final double popularity;
-  final String? posterPath;
+  @override
   final String releaseDate;
+  @override
   final String title;
   final bool video;
-  final double voteAverage;
-  final int voteCount;
 
-  MovieModel({
-    required this.adult,
-    this.backdropPath,
-    required this.genreIds,
-    required this.id,
-    required this.originalLanguage,
-    required this.originalTitle,
-    required this.overview,
-    required this.popularity,
-    this.posterPath,
-    required this.releaseDate,
-    required this.title,
-    required this.video,
-    required this.voteAverage,
-    required this.voteCount,
-  });
-
-  factory MovieModel.fromJson(Map<String, dynamic> json) {
-    return MovieModel(
-      adult: json['adult'],
-      backdropPath: json['backdrop_path'],
-      genreIds: List<int>.from(json['genre_ids']),
-      id: json['id'],
-      originalLanguage: json['original_language'],
-      originalTitle: json['original_title'],
-      overview: json['overview'],
-      popularity: json['popularity'].toDouble(),
-      posterPath: json['poster_path'],
-      releaseDate: json['release_date'],
-      title: json['title'],
-      video: json['video'],
-      voteAverage: json['vote_average'].toDouble(),
-      voteCount: json['vote_count'],
-    );
-  }
+  MovieModel.fromJson(super.json)
+    : adult = json['adult'] ?? false,
+      originalTitle = json['original_title'] ?? '',
+      releaseDate = json['release_date'] ?? '',
+      title = json['title'] ?? '',
+      video = json['video'] ?? false,
+      super.fromJson();
 }

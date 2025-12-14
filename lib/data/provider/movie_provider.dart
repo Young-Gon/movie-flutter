@@ -18,7 +18,6 @@ final movieRepositoryProvider = Provider<MovieRepository>((ref) {
 
 // 3. 기존 Provider들 (개별 사용 가능)
 final nowPlayingMoviesProvider = FutureProvider((ref) {
-  print("nowPlayingMoviesProvider");
   final movieRepository = ref.watch(movieRepositoryProvider);
   return movieRepository.getNowPlayingMovies();
 });
