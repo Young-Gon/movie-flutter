@@ -1,8 +1,8 @@
-import 'dart:ui';
-
 import 'package:flutter/material.dart';
+import 'package:movie/component/media_detail_header.dart';
 import 'package:movie/data/model/MovieModel.dart';
-import 'package:movie/util.dart';
+
+import '../screens/detail/detail_screen.dart';
 
 class MoviePagerItem extends StatelessWidget {
   const MoviePagerItem({super.key, required MovieModel movie}) : _movie = movie;
@@ -11,69 +11,30 @@ class MoviePagerItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Stack(
-      children: [
-        _movie.backdropPath != null
-            ? Image.network(
-                Util.makeImgPath(_movie.backdropPath!),
-                height: 250,
-                fit: BoxFit.fitWidth,
-              )
-            : Container(color: Colors.grey, height: 250),
-        ClipRect(
-          child: BackdropFilter(
-            filter: ImageFilter.blur(sigmaX: 5.0, sigmaY: 5.0),
-            child: Container(
-              color: Theme.of(context).colorScheme.surface.withOpacity(0.3),
-            ),
+    return GestureDetector(
+      onTap: () {
+        print("MoviePagerItem clicked!!");
+        Navigator.of(context).push(
+          MaterialPageRoute(builder: (context) => DetailScreen(media: _movie)),
+        );
+      },
+      child: MediaDetailHeader(
+        movie: _movie,
+        children: [
+          Text(_movie.title, style: Theme.of(context).textTheme.titleLarge),
+          const SizedBox(height: 10),
+          Text(
+            _movie.releaseDate,
+            style: Theme.of(context).textTheme.bodyMedium,
           ),
-        ),
-        GestureDetector(
-          onTap: () {
-            Navigator.of(context).pushNamed('/movie', arguments: _movie);
-          },
-          child: Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 20),
-            child: Row(
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
-                _movie.posterPath != null
-                    ? Image.network(
-                        Util.makeImgPath(_movie.posterPath!),
-                        width: 100,
-                        height: 150,
-                        fit: BoxFit.cover,
-                      )
-                    : Container(width: 100, height: 150, color: Colors.grey),
-                const SizedBox(width: 10),
-                Expanded(
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Text(
-                        _movie.title,
-                        style: Theme.of(context).textTheme.titleLarge,
-                      ),
-                      const SizedBox(height: 10),
-                      Text(
-                        _movie.releaseDate,
-                        style: Theme.of(context).textTheme.bodyMedium,
-                      ),
-                      Text(
-                        _movie.overview,
-                        style: Theme.of(context).textTheme.bodySmall,
-                        maxLines: 3,
-                        overflow: TextOverflow.ellipsis,
-                      ),
-                    ],
-                  ),
-                ),
-              ],
-            ),
+          Text(
+            _movie.overview,
+            style: Theme.of(context).textTheme.bodySmall,
+            maxLines: 3,
+            overflow: TextOverflow.ellipsis,
           ),
-        ),
-      ],
+        ],
+      ),
     );
   }
 }

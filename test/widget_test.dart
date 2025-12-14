@@ -5,26 +5,26 @@
 // gestures. You can also use WidgetTester to find child widgets in the widget
 // tree, read text, and verify that the values of widget properties are correct.
 
-import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 
-import 'package:movie/main.dart';
+mixin Swimmer {
+  void swim() {
+    print("Swimming...");
+  }
+}
+
+class Human with Swimmer {}
+
+class Fish with Swimmer {}
+
+class Bird {}
 
 void main() {
-  testWidgets('Counter increments smoke test', (WidgetTester tester) async {
-    // Build our app and trigger a frame.
-    await tester.pumpWidget(const MyApp());
+  final human = Human();
+  final fish = Fish();
+  final bird = Bird();
 
-    // Verify that our counter starts at 0.
-    expect(find.text('0'), findsOneWidget);
-    expect(find.text('1'), findsNothing);
-
-    // Tap the '+' icon and trigger a frame.
-    await tester.tap(find.byIcon(Icons.add));
-    await tester.pump();
-
-    // Verify that our counter has incremented.
-    expect(find.text('0'), findsNothing);
-    expect(find.text('1'), findsOneWidget);
-  });
+  expect(human is Swimmer, true); // true
+  expect(fish is Swimmer, true); // true
+  expect(bird is Swimmer, false); // false
 }

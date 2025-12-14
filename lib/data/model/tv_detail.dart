@@ -1,4 +1,4 @@
-import 'package:movie/data/model/MovieDetail.dart';
+import 'package:movie/data/model/MediaDetail.dart';
 import 'package:movie/data/model/TVModel.dart';
 
 class Creator {
@@ -132,11 +132,10 @@ class Season {
   }
 }
 
-class TVDetailModel extends TVModel {
+// TVModel을 상속하고 MediaDetailMixin을 with합니다.
+class TVDetailModel extends TVModel with MediaDetailMixin {
   final List<Creator> createdBy;
   final List<int> episodeRunTime;
-  final List<Genre> genres;
-  final String? homepage;
   final bool inProduction;
   final List<String> languages;
   final String? lastAirDate;
@@ -145,24 +144,15 @@ class TVDetailModel extends TVModel {
   final List<Network> networks;
   final int numberOfEpisodes;
   final int numberOfSeasons;
-  final List<ProductionCompany> productionCompanies;
-  final List<ProductionCountry> productionCountries;
   final List<Season> seasons;
-  final List<SpokenLanguage> spokenLanguages;
-  final String status;
-  final String? tagline;
   final String type;
-  final List<Video> videos;
 
-  TVDetailModel.fromJson(super.json)
+  TVDetailModel.fromJson(Map<String, dynamic> json)
+    // 1. TVDetailModel의 고유 필드 파싱
     : createdBy = (json['created_by'] as List? ?? [])
           .map((e) => Creator.fromJson(e))
           .toList(),
       episodeRunTime = List<int>.from(json['episode_run_time'] ?? []),
-      genres = (json['genres'] as List? ?? [])
-          .map((e) => Genre.fromJson(e))
-          .toList(),
-      homepage = json['homepage'],
       inProduction = json['in_production'] ?? false,
       languages = List<String>.from(json['languages'] ?? []),
       lastAirDate = json['last_air_date'],
@@ -177,23 +167,30 @@ class TVDetailModel extends TVModel {
           .toList(),
       numberOfEpisodes = json['number_of_episodes'] ?? 0,
       numberOfSeasons = json['number_of_seasons'] ?? 0,
-      productionCompanies = (json['production_companies'] as List? ?? [])
-          .map((e) => ProductionCompany.fromJson(e))
-          .toList(),
-      productionCountries = (json['production_countries'] as List? ?? [])
-          .map((e) => ProductionCountry.fromJson(e))
-          .toList(),
       seasons = (json['seasons'] as List? ?? [])
           .map((e) => Season.fromJson(e))
           .toList(),
-      spokenLanguages = (json['spoken_languages'] as List? ?? [])
-          .map((e) => SpokenLanguage.fromJson(e))
-          .toList(),
-      status = json['status'] ?? '',
-      tagline = json['tagline'],
       type = json['type'] ?? '',
-      videos = (json['videos']?['results'] as List? ?? [])
-          .map((e) => Video.fromJson(e))
-          .toList(),
-      super.fromJson();
+      // 2. 부모 TVModel의 fromJson 호출
+      super.fromJson(json) {
+    // 3. Mixin의 필드를 초기화합니다.
+    genres = (json['genres'] as List? ?? [])
+        .map((e) => Genre.fromJson(e))
+        .toList();
+    homepage = json['homepage'];
+    productionCompanies = (json['production_companies'] as List? ?? [])
+        .map((e) => ProductionCompany.fromJson(e))
+        .toList();
+    productionCountries = (json['production_countries'] as List? ?? [])
+        .map((e) => ProductionCountry.fromJson(e))
+        .toList();
+    spokenLanguages = (json['spoken_languages'] as List? ?? [])
+        .map((e) => SpokenLanguage.fromJson(e))
+        .toList();
+    status = json['status'] ?? '';
+    tagline = json['tagline'];
+    videos = (json['videos']?['results'] as List? ?? [])
+        .map((e) => Video.fromJson(e))
+        .toList();
+  }
 }

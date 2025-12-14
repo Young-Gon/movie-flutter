@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:movie/data/model/MediaModel.dart';
 
+import '../screens/detail/detail_screen.dart';
 import '../util.dart';
 
 class MediaItem extends StatelessWidget {
@@ -12,7 +13,9 @@ class MediaItem extends StatelessWidget {
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () {
-        Navigator.of(context).pushNamed('/movie', arguments: _media);
+        Navigator.of(context).push(
+          MaterialPageRoute(builder: (context) => DetailScreen(media: _media)),
+        );
       },
       child: SizedBox(
         height: 150,
