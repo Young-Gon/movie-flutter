@@ -1,5 +1,6 @@
 import 'package:movie/data/api/ApiService.dart';
 import 'package:movie/data/model/GeneralResult.dart';
+import 'package:movie/data/model/MovieDetail.dart';
 import 'package:movie/data/model/MovieModel.dart';
 
 class MovieRepository {
@@ -23,6 +24,13 @@ class MovieRepository {
     return await _apiService.getSearch(
       query: query,
       fromJson: (json) => MovieModel.fromJson(json),
+    );
+  }
+
+  Future<MovieDetailModel> getDetail({required int id}) async {
+    return await _apiService.getDetail(
+      id: id,
+      fromJson: (json) => MovieDetailModel.fromJson(json),
     );
   }
 }

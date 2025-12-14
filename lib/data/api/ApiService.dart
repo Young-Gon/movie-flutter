@@ -52,6 +52,17 @@ class ApiService {
     );
   }
 
+  Future<R> getDetail<R extends MediaModel>({
+    required int id,
+    required R Function(dynamic) fromJson,
+  }) async {
+    return await _get(
+      path: '/${R == TVModel ? 'tv' : 'movie'}/$id',
+      queryParameters: {'append_to_response': 'videos', 'language': 'ko-KR'},
+      fromJson: (json) => fromJson(json),
+    );
+  }
+
   Future<GeneralResult<TVModel>> getTrendingTVs() async {
     return await _get(
       path: '/trending/tv/week',

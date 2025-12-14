@@ -2,7 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:movie/component/ErrorScreen.dart';
 import 'package:movie/component/MediaItem.dart';
-import 'package:movie/data/provider/movie_provider.dart';
+
+import '../../../data/provider/seach_provider.dart';
 
 class SearchPage extends ConsumerStatefulWidget {
   const SearchPage({super.key});

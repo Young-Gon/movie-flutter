@@ -2,6 +2,8 @@ import 'package:movie/data/api/ApiService.dart';
 import 'package:movie/data/model/GeneralResult.dart';
 import 'package:movie/data/model/TVModel.dart';
 
+import '../model/tv_detail.dart';
+
 class TVRepository {
   final ApiService _apiService;
 
@@ -23,6 +25,13 @@ class TVRepository {
     return await _apiService.getSearch(
       query: query,
       fromJson: (json) => TVModel.fromJson(json),
+    );
+  }
+
+  Future<TVDetailModel> getDetail({required int id}) async {
+    return await _apiService.getDetail(
+      id: id,
+      fromJson: (json) => TVDetailModel.fromJson(json),
     );
   }
 }
