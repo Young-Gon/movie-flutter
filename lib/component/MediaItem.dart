@@ -1,27 +1,27 @@
 import 'package:flutter/material.dart';
+import 'package:movie/data/model/MediaModel.dart';
 
-import '../data/model/MovieModel.dart';
 import '../util.dart';
 
 class MediaItem extends StatelessWidget {
-  const MediaItem({super.key, required MovieModel movie}) : _movie = movie;
+  const MediaItem({super.key, required MediaModel media}) : _media = media;
 
-  final MovieModel _movie;
+  final MediaModel _media;
 
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () {
-        Navigator.of(context).pushNamed('/movie', arguments: _movie);
+        Navigator.of(context).pushNamed('/movie', arguments: _media);
       },
       child: SizedBox(
         height: 150,
         child: Row(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            _movie.posterPath != null
+            _media.posterPath != null
                 ? Image.network(
-                    Util.makeImgPath(_movie.posterPath!),
+                    Util.makeImgPath(_media.posterPath!),
                     width: 100,
                     height: 160,
                     fit: BoxFit.cover,
@@ -33,11 +33,11 @@ class MediaItem extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    _movie.title,
+                    _media.title,
                     style: Theme.of(context).textTheme.bodyLarge,
                   ),
                   Text(
-                    _movie.releaseDate,
+                    _media.releaseDate,
                     style: Theme.of(context).textTheme.bodyMedium,
                   ),
                 ],

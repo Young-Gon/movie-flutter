@@ -18,4 +18,11 @@ class MovieRepository {
   Future<GeneralResult<MovieModel>> getTrendingMovie() async {
     return await _apiService.getTrendingMovie();
   }
+
+  Future<GeneralResult<MovieModel>> getSearch({required String query}) async {
+    return await _apiService.getSearch(
+      query: query,
+      fromJson: (json) => MovieModel.fromJson(json),
+    );
+  }
 }

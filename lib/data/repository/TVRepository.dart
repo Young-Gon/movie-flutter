@@ -18,4 +18,11 @@ class TVRepository {
   Future<GeneralResult<TVModel>> getTopRatedTVs() async {
     return await _apiService.getTopRatedTVs();
   }
+
+  Future<GeneralResult<TVModel>> getSearch({required String query}) async {
+    return await _apiService.getSearch(
+      query: query,
+      fromJson: (json) => TVModel.fromJson(json),
+    );
+  }
 }

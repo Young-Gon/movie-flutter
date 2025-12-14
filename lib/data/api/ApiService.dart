@@ -2,6 +2,7 @@ import 'package:dio/dio.dart';
 import 'package:movie/data/model/TVModel.dart';
 
 import '../model/GeneralResult.dart';
+import '../model/MediaModel.dart';
 import '../model/MovieModel.dart';
 import 'DioClient.dart';
 
@@ -37,6 +38,20 @@ class ApiService {
     );
   }
 
+  Future<GeneralResult<R>> getSearch<R extends MediaModel>({
+    required String query,
+    required R Function(dynamic) fromJson,
+  }) async {
+    return await _get(
+      // 타입을 비교할 때는 '==' 연산자를 사용합니다.
+      path: '/search/${R == TVModel ? 'tv' : 'movie'}',
+      queryParameters: {'query': query, 'language': 'ko-KR', 'page': "1"},
+      fromJson: (json) => GeneralResult.fromJson(json, (data) {
+        return fromJson(data);
+      }),
+    );
+  }
+
   Future<GeneralResult<TVModel>> getTrendingTVs() async {
     return await _get(
       path: '/trending/tv/week',
@@ -66,9 +81,9 @@ class ApiService {
     );
   }
 
-  Future<T> _get<T>({
+  Future<R> _get<R>({
     required String path,
-    required T Function(dynamic) fromJson,
+    required R Function(dynamic) fromJson,
     Map<String, String>? queryParameters,
   }) async {
     try {

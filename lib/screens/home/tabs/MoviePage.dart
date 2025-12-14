@@ -79,7 +79,7 @@ class _MoviePageState extends ConsumerState<MoviePage> {
             }
             return Padding(
               padding: const EdgeInsets.symmetric(horizontal: 20),
-              child: MediaItem(movie: trendingData.results[index - 1]),
+              child: MediaItem(media: trendingData.results[index - 1]),
             );
           },
         );
