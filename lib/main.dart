@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:get_it/get_it.dart';
 import 'package:injectable/injectable.dart';
-import 'package:movie/screens/home/HomeScreen.dart';
+import 'package:movie/routes/router.dart';
 
 import 'main.config.dart';
 
@@ -51,12 +51,12 @@ class MyApp extends StatelessWidget {
           ),
     );
 
-    return MaterialApp(
+    return MaterialApp.router(
       title: 'Flutter Demo',
       theme: lightTheme,
       darkTheme: darkTheme,
       themeMode: ThemeMode.system,
-      home: const HomeScreen(),
+      routerConfig: router,
     );
   }
 }

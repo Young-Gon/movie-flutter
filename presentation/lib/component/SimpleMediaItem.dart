@@ -1,8 +1,7 @@
 import 'package:domain/model/MediaModel.dart';
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 
-import '../data/model/MediaModel.dart';
-import '../screens/detail/detail_screen.dart';
 import '../util.dart';
 
 class SimpleMediaItem extends StatelessWidget {
@@ -15,9 +14,7 @@ class SimpleMediaItem extends StatelessWidget {
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () {
-        Navigator.of(context).push(
-          MaterialPageRoute(builder: (context) => DetailScreen(media: _media)),
-        );
+        context.push('/details', extra: _media);
       },
       child: SizedBox(
         width: 100,

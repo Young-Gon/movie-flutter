@@ -6,13 +6,12 @@ import 'package:injectable/injectable.dart';
 
 @injectable
 class MovieViewModel {
-  MovieViewModel(this._movieRepository, this._tvRepository) {
+  MovieViewModel(this._movieRepository) {
     onIntent(GetMovies());
   }
 
   final MovieRepository _movieRepository;
-  final TVRepository _tvRepository;
-  final _stateController = StreamController<MovieState>();
+  final _stateController = StreamController<MovieState>.broadcast();
 
   Stream<MovieState> get state => _stateController.stream;
   MovieState _stateSnapShot = MovieState();

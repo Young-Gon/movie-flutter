@@ -1,5 +1,6 @@
 import 'package:domain/model/MovieModel.dart';
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 
 import 'media_detail_header.dart';
 
@@ -12,10 +13,7 @@ class MoviePagerItem extends StatelessWidget {
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () {
-        print("MoviePagerItem clicked!!");
-        Navigator.of(context).push(
-          MaterialPageRoute(builder: (context) => DetailScreen(media: _movie)),
-        );
+        context.push('/details', extra: _movie);
       },
       child: MediaDetailHeader(
         movie: _movie,

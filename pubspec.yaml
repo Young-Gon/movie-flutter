@@ -32,6 +32,8 @@ dependencies:
     sdk: flutter
   data:
     path: data
+  domain:
+    path: domain
   presentation:
     path: presentation
 
@@ -44,6 +46,8 @@ dependencies:
   url_launcher: ^6.3.2
   get_it: ^9.2.0
   injectable: ^2.7.1+4
+  go_router: ^17.0.1
+  provider: ^6.1.1
 
 dev_dependencies:
   flutter_test:
