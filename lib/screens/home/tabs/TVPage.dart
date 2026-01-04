@@ -91,7 +91,7 @@ class TvPage extends ConsumerWidget {
       loading: () => const Center(child: CircularProgressIndicator()),
       error: (error, stackTrace) {
         print('TV 페이지 에러 발생: $error');
-        return ErrorScreen();
+        return const ErrorScreen();
       },
     );
   }
