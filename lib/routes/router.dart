@@ -6,10 +6,9 @@ import 'package:presentation/screen/home/home_screen.dart';
 import 'package:presentation/screen/home/tabs/movie_tab.dart';
 import 'package:presentation/screen/home/tabs/movie_view_model.dart';
 import 'package:presentation/screen/home/tabs/search_tab.dart';
+import 'package:presentation/screen/home/tabs/search_view_model.dart';
 import 'package:presentation/screen/home/tabs/tv_tab.dart';
 import 'package:presentation/screen/home/tabs/tv_view_model.dart';
-import 'package:presentation/screen/home/tabs/search_tab.dart';
-import 'package:presentation/screen/home/tabs/search_view_model.dart';
 import 'package:provider/provider.dart';
 
 import '../main.dart';
@@ -70,9 +69,12 @@ final GoRouter router = GoRouter(
       builder: (context, state) {
         final media = state.extra as MediaModel;
         return Provider<DetailViewModel>(
-          create: (_) => getIt<DetailViewModel>(),
+          create: (_) {
+            final viewModel = getIt<DetailViewModel>(param1: media);
+            return viewModel;
+          },
           dispose: (_, vm) => vm.dispose(),
-          child: DetailScreen(media: media),
+          child: DetailScreen(),
         );
       },
     ),

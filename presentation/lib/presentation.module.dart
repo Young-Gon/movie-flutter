@@ -17,9 +17,17 @@ class PresentationPackageModule extends _i526.MicroPackageModule {
 // initializes the registration of main-scope dependencies inside of GetIt
   @override
   _i687.FutureOr<void> init(_i526.GetItHelper gh) {
-    gh.factory<_i356.DetailViewModel>(() => _i356.DetailViewModel());
     gh.factory<_i863.MovieViewModel>(
         () => _i863.MovieViewModel(gh<_i494.MovieRepository>()));
+    gh.factoryParam<_i356.DetailViewModel, _i494.MediaModel, dynamic>((
+      initalMedia,
+      _,
+    ) =>
+        _i356.DetailViewModel(
+          gh<_i494.MovieRepository>(),
+          gh<_i494.TVRepository>(),
+          initalMedia,
+        ));
     gh.factory<_i404.TvViewModel>(
         () => _i404.TvViewModel(gh<_i494.TVRepository>()));
     gh.factory<_i746.SearchViewModel>(() => _i746.SearchViewModel(
