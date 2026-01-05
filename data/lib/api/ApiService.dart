@@ -3,6 +3,7 @@ import 'package:domain/model/GeneralResult.dart';
 import 'package:domain/model/MediaModel.dart';
 import 'package:domain/model/MovieModel.dart';
 import 'package:domain/model/TVModel.dart';
+import 'package:domain/model/tv_detail.dart';
 import 'package:injectable/injectable.dart';
 
 @injectable
@@ -59,7 +60,7 @@ class ApiService {
     required R Function(dynamic) fromJson,
   }) async {
     return await _get(
-      path: '/${R == TVModel ? 'tv' : 'movie'}/$id',
+      path: '/${R == TVDetailModel ? 'tv' : 'movie'}/$id',
       queryParameters: {'append_to_response': 'videos', 'language': 'ko-KR'},
       fromJson: (json) => fromJson(json),
     );
