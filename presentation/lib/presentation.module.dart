@@ -10,6 +10,7 @@ import 'package:domain/domain.dart' as _i494;
 import 'package:injectable/injectable.dart' as _i526;
 import 'package:presentation/screen/detail/detail_view_model.dart' as _i356;
 import 'package:presentation/screen/home/tabs/movie_view_model.dart' as _i863;
+import 'package:presentation/screen/home/tabs/search_view_model.dart' as _i746;
 import 'package:presentation/screen/home/tabs/tv_view_model.dart' as _i404;
 
 class PresentationPackageModule extends _i526.MicroPackageModule {
@@ -21,5 +22,9 @@ class PresentationPackageModule extends _i526.MicroPackageModule {
         () => _i863.MovieViewModel(gh<_i494.MovieRepository>()));
     gh.factory<_i404.TvViewModel>(
         () => _i404.TvViewModel(gh<_i494.TVRepository>()));
+    gh.factory<_i746.SearchViewModel>(() => _i746.SearchViewModel(
+          gh<_i494.MovieRepository>(),
+          gh<_i494.TVRepository>(),
+        ));
   }
 }

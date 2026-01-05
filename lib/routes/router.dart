@@ -8,6 +8,8 @@ import 'package:presentation/screen/home/tabs/movie_view_model.dart';
 import 'package:presentation/screen/home/tabs/search_tab.dart';
 import 'package:presentation/screen/home/tabs/tv_tab.dart';
 import 'package:presentation/screen/home/tabs/tv_view_model.dart';
+import 'package:presentation/screen/home/tabs/search_tab.dart';
+import 'package:presentation/screen/home/tabs/search_view_model.dart';
 import 'package:provider/provider.dart';
 
 import '../main.dart';
@@ -50,7 +52,11 @@ final GoRouter router = GoRouter(
           routes: [
             GoRoute(
               path: '/search',
-              builder: (context, state) => const SearchTab(),
+              builder: (context, state) => Provider<SearchViewModel>(
+                create: (_) => getIt(),
+                dispose: (_, vm) => vm.dispose(),
+                child: const SearchTab(),
+              ),
             ),
           ],
         ),
