@@ -7,6 +7,7 @@ import 'package:presentation/screen/home/tabs/movie_tab.dart';
 import 'package:presentation/screen/home/tabs/movie_view_model.dart';
 import 'package:presentation/screen/home/tabs/search_tab.dart';
 import 'package:presentation/screen/home/tabs/tv_tab.dart';
+import 'package:presentation/screen/home/tabs/tv_view_model.dart';
 import 'package:provider/provider.dart';
 
 import '../main.dart';
@@ -26,7 +27,7 @@ final GoRouter router = GoRouter(
             GoRoute(
               path: '/movie',
               builder: (context, state) => Provider<MovieViewModel>(
-                create: (_) => getIt<MovieViewModel>(),
+                create: (_) => getIt(),
                 dispose: (_, vm) => vm.dispose(),
                 child: const MovieTab(),
               ),
@@ -35,7 +36,14 @@ final GoRouter router = GoRouter(
         ),
         StatefulShellBranch(
           routes: [
-            GoRoute(path: '/tv', builder: (context, state) => const TvTab()),
+            GoRoute(
+              path: '/tv',
+              builder: (context, state) => Provider<TvViewModel>(
+                create: (_) => getIt(),
+                dispose: (_, vm) => vm.dispose(),
+                child: const TvTab(),
+              ),
+            ),
           ],
         ),
         StatefulShellBranch(
